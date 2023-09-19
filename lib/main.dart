@@ -35,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static const methodChannel = MethodChannel('com.example.app/method_channel');
   static const eventChannel = EventChannel("com.example.app/event_channel");
+  static const printChannel = BasicMessageChannel("com.example.app/print_channel", StandardMessageCodec());
 
   String _sensorAvailable = 'Unknown';
   double _sensorValue = 0.0;
@@ -66,6 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
     _sensorSubscription?.cancel();
   }
 
+  _printMessage() async {
+    var response = await printChannel.send("connect");
+    print(response);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +92,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(onPressed: _startReading, child: const Text('Start Reading')),
             if (_sensorAvailable == 'true' && _sensorValue > 0)
               ElevatedButton(onPressed: _stopReading, child: const Text('Stop Reading')),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _printMessage(),
+              child: const Text('Print Message'),
+            ),
           ],
         ),
       ),
