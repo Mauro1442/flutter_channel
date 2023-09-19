@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static const methodChannel = MethodChannel('com.example.app/method_channel');
-  static const eventChannel = EventChannel('com.example.app/event_channel');
+  static const eventChannel = EventChannel("com.example.app/event_channel");
 
   String _sensorAvailable = 'Unknown';
   double _sensorValue = 0.0;
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _checkAvailability() async {
     try {
-      var available = await methodChannel.invokeMethod('isSensorAvailable');
+      var available = await methodChannel.invokeMethod("isSensorAvailable");
       setState(() {
         _sensorAvailable = available.toString();
       });
