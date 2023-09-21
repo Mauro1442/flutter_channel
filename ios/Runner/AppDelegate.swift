@@ -15,6 +15,29 @@ import frmBixolonUPOS
       let pressureStreamHandler = PressureStreamHandler()
       
       let bixolon = UPOSPrinterController()
+      let printer = UPOSPrinter()
+      
+      
+      var p1 = UPOSDeviceObjects1.instance.printerCon
+      let pL1 = UPOSDeviceObjects1.instance.printerList
+
+
+      class UPOSDeviceObjects1:NSObject {
+          static let instance = UPOSDeviceObjects1()
+          var printerCon  = UPOSPrinterController()
+          var printerList = UPOSPrinters()
+          
+          override init() {
+              super.init()
+              printerList = printerCon.getRegisteredDevice() as! UPOSPrinters
+          }
+      }
+      
+      var devices:UPOSDevices {
+          get { return pL1 }
+      }
+
+      
       
       let PRINT_CHANNEL_NAME = "com.example.app/print_channel"
       
@@ -42,7 +65,13 @@ import frmBixolonUPOS
           (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
           switch call.method {
           case "connect":
-              result(bixolon.connect("SPP-310"))
+//              result(p1.connect("SPP-R310"))
+//              print("\(p1.getPrinterStatus())")
+ //             p1.open("SPP-R310", address: "74:F0:7D:AA:31:3C")
+ //             result(p1.printBarcode(2, data: "1234567890123", symbology: 104, height: 100, barWidth: 2, alignment: -1, textPostion: -13))
+              result(
+                UPOSDeviceObjects1().printerCon.description
+              )
           default:
               result(FlutterMethodNotImplemented)
           }

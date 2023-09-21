@@ -35,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static const methodChannel = MethodChannel('com.example.app/method_channel');
   static const eventChannel = EventChannel("com.example.app/event_channel");
-  static const printChannel = BasicMessageChannel("com.example.app/print_channel", StandardMessageCodec());
+  static const printChannel = MethodChannel("com.example.app/print_channel");
 
   String _sensorAvailable = 'Unknown';
   double _sensorValue = 0.0;
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _printMessage() async {
-    var response = await printChannel.send("connect");
+    var response = await printChannel.invokeMethod("connect");
     print(response);
   }
 
